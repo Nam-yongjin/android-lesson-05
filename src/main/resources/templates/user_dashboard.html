@@ -6,8 +6,28 @@
         <ul id="dataList">
 
         </ul>
+        <span id="userData"> </span>
     </body>
     <script>
-        // 이곳에 코드를 구현하십시오.
+        document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/v1/data/list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => response.json())
+            .then(dataList => {
+                const dataListElement = document.getElementById('dataList');
+
+                dataList.forEach(data => {
+                    let listItem = document.createElement('li');
+                    listItem.textContent = data.text;
+                    dataListElement.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
     </script>
 </html>
